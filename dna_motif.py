@@ -16,18 +16,11 @@ def find_motif_positions(sequence, motif_sequence):
 
 input_file_path = input("Enter the input file: ").strip()
 output_file_path = input("Enter the output file (leave blank to use input file name): ").strip() or f"{input_file_path}_output.txt"
-
-
-# enter the motif sequence to search for
 motif_sequence = input("Enter the motif sequence to search for: ").strip()
 
-# Parse the sequences from the input FASTA file
 sequences = parse_fasta(input_file_path)
-
-# Find motif positions for each sequence
 sequence_positions = {seq_id: find_motif_positions(seq, motif_sequence) for seq_id, seq in sequences.items()}
 
-# Write positions to the output file
 with open(output_file_path, 'w') as output_file:
     for seq_id, positions in sequence_positions.items():
         output_file.write(f"{seq_id}: {', '.join(map(str, positions))}\n")
