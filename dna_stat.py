@@ -6,50 +6,44 @@ def read_fasta(file_path):
             line = line.strip()
             if line.startswith('>'):
                 if sequence:
-                    sequences.append(sequence.upper())  # Convert to uppercase
+                    sequences.append(sequence.upper())
                     sequence = ''
             else:
                 sequence += line
         if sequence:
-            sequences.append(sequence.upper())  # Append the last sequence
+            sequences.append(sequence.upper())
     return sequences
 
 Nucleotides = ("A", "C", "G", "T")
 
 def validate(dna_sequence):
     """Validates if a DNA sequence contains only valid nucleotides."""
-    tmpdna = dna_sequence.upper()
-    for i in tmpdna:
-        if i not in Nucleotides:
-            return False
-    return tmpdna
+    return all(nuc in Nucleotides for nuc in dna_sequence.upper())
 
 def countfreq(dna_sequence):
     """Counts the frequency of each nucleotide in a DNA sequence."""
-    tmpfreq = {"A": 0, "C": 0, "G": 0, "T": 0}
-    for i in dna_sequence.upper():
-        tmpfreq[i] += 1
-    return tmpfreq
+    frequency = {"A": 0, "C": 0, "G": 0, "T": 0}
+    for nucleotide in dna_sequence.upper():
+        if nucleotide in frequency:
+            frequency[nucleotide] += 1
+    return frequency
+
+# Get input and output file paths from the user
+input_file = input("Enter the input file: ").strip()
+output_file = input("Enter the output file (leave blank to use default name): ").strip() or f"{input_file}_output.txt"
 
 # Read DNA sequences from FASTA file
-sequence = input("Enter the input file:")
-sequences= read_fasta(sequence)
+sequences = read_fasta(input_file)
 
-output_file = input("Entter the output file for the sequences to be stored:") or f"{sequence}_output.txt"
-
-# Open output file to store results
-with open(output_file, 'w') as output_file:
+# Write results to the output file
+with open(output_file, 'w') as file:
     for seq_num, dna_sequence in enumerate(sequences, start=1):
-        # Validate sequence
         is_valid = validate(dna_sequence)
-        
-        # Count frequency
         frequency = countfreq(dna_sequence)
         
-        # Write results to output file
-        output_file.write(f"Sequence {seq_num}:\n")
-        output_file.write(f"Valid: {is_valid}\n")
-        output_file.write(f"Length: {len(dna_sequence)}\n")
-        output_file.write(f"Nucleotide frequency: {frequency}\n\n")
+        file.write(f"Sequence {seq_num}:\n")
+        file.write(f"Valid: {is_valid}\n")
+        file.write(f"Length: {len(dna_sequence)}\n")
+        file.write(f"Nucleotide frequency: {frequency}\n\n")
 
 print("Processing complete.")
