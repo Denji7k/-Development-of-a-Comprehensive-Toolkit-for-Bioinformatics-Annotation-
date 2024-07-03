@@ -1,5 +1,4 @@
 def read_fasta(file_path):
-    """Reads sequences from a FASTA file."""
     with open(file_path, 'r') as file:
         sequences = []
         sequence = ''
@@ -16,35 +15,28 @@ def read_fasta(file_path):
     return sequences
 
 def length_check(seq1, seq2):
-    """Checks if the lengths of two sequences are equal."""
     return len(seq1) == len(seq2)
 
 def find_matching_segments(seq1, seq2):
-    """Finds matching segments between two sequences."""
     return ''.join(a if a == b else '*' for a, b in zip(seq1, seq2))
 
 def calculate_similarity_percentage(seq1, seq2):
-    """Calculates the percentage similarity between two sequences."""
     matches = sum(a == b for a, b in zip(seq1, seq2))
     return (matches / len(seq1)) * 100
 
-# Get file paths from user
 file1_path = input("Enter the path for the first FASTA file: ").strip()
 file2_path = input("Enter the path for the second FASTA file: ").strip()
 output_file_path = input("Enter the path for the output file (default: comparison_output.txt): ").strip()
 
-# Use default output file name if none is provided
 if not output_file_path:
     output_file_path = 'comparison_output.txt'
 
-# Read sequences from FASTA files
 sequences1 = read_fasta(file1_path)
 sequences2 = read_fasta(file2_path)
 
 if not sequences1 or not sequences2:
     raise ValueError("Both FASTA files must contain at least one sequence.")
 
-# Compare sequences and write results to output file
 with open(output_file_path, 'w') as f:
     for i, seq1 in enumerate(sequences1, 1):
         for j, seq2 in enumerate(sequences2, 1):
