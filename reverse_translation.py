@@ -1,12 +1,16 @@
 def read_fasta(file_path):
-    """Reads protein sequence from a FASTA file and returns the sequence."""
-    sequence = ''
+    sequences = {}
+    current_key = None
     with open(file_path, 'r') as file:
         for line in file:
             line = line.strip()
-            if not line.startswith('>'):  # Skip header lines starting with '>'
-                sequence += line
-    return sequence.upper()  # Return the concatenated sequence in uppercase
+            if line.startswith('>'):
+                current_key = line[1:]
+                sequences[current_key] = ''
+            else:
+                if current_key:
+                    sequences[current_key] += line
+    return sequences
 
 table = {
     "W": 1, "M": 1,
@@ -16,19 +20,20 @@ table = {
     "L": 6, "S": 6, "R": 6
 }
 
-# Read protein sequence from FASTA file
-# Read DNA sequences from FASTA file
-sequence = input("Enter the input file:").strip()
-protein_seq = read_fasta(sequence)
+input_file = input("Enter the input file:").strip()
+protein_sequences = read_fasta(input_file)
 
-# Calculate the result based on the amino acids
-result = 1
-for amino_acid in protein_seq:
-    result = (result * table.get(amino_acid, 1)) % 1000000
+results = {}
+for seq_id, protein_seq in protein_sequences.items():
+    result = 1
+    for amino_acid in protein_seq.upper():
+        result = (result * table.get(amino_acid, 1)) % 1000000
+    results[seq_id] = result
 
-output_file =  input("Eneter the output file:").strip()or f"{sequence}_output.txt"
-# Write the result into a new file
-with open(output_file, 'w') as output_file:
-    output_file.write(str(result))
+output_file = input("Enter the output file:").strip() or f"{input_file}_output.txt"
 
-print("Processing complete.")
+with open(output_file, 'w') as file:
+    for seq_id, result in results.items():
+        file.write(f"{seq_id}: {result}\n")
+
+print("Output stored in 'fasta_sequence.txt_ouput.txt' ")
