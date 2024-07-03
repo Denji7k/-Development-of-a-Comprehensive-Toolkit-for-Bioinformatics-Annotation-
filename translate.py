@@ -25,20 +25,20 @@ def translate_fasta_to_rna(input_file, output_file):
     with open(input_file, 'r') as file:
         sequences = {}
         current_seq_id = ''
-        current_sequence = ''
-
+        Header = ''
+ 
         for line in file:
             line = line.strip()
             if line.startswith('>'):
                 if current_seq_id:
-                    sequences[current_seq_id] = current_sequence.replace('T', 'U')
+                    sequences[current_seq_id] =Header.replace('T', 'U')
                 current_seq_id = line[1:]
-                current_sequence = ''
+                Header = ''
             else:
-                current_sequence += line
+               Header += line
 
         if current_seq_id:
-            sequences[current_seq_id] = current_sequence.replace('T', 'U')
+            sequences[current_seq_id] =Header.replace('T', 'U')
 
     with open(output_file, 'w') as protein_file:
         for seq_id, rna_seq in sequences.items():
