@@ -20,9 +20,9 @@ def convert_fasta_to_triple(input_file: str, output_file: str):
                 sequence += line
         if seq_id:
             outfile.write(f">{seq_id}\n{convert_to_triple_code(sequence)}\n")
-
 input_file = input("Enter the input file: ").strip()
 output_file = input("Enter the output file (leave blank to use input file name): ").strip() or f"{input_file}_output.txt"
+
 
 convert_fasta_to_triple(input_file, output_file)
 print(f"Converted sequences have been written to '{output_file}'.")
