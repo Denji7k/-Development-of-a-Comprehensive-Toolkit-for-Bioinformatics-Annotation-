@@ -17,33 +17,30 @@ def read_fasta(file_path):
 Nucleotides = ("A", "C", "G", "T")
 
 def validate(dna_sequence):
-    """Validates if a DNA sequence contains only valid nucleotides."""
-    return all(nuc in Nucleotides for nuc in dna_sequence.upper())
+    tmpdna = dna_sequence.upper()
+    for i in tmpdna:
+        if i not in Nucleotides:
+            return False
+    return tmpdna
 
 def countfreq(dna_sequence):
-    """Counts the frequency of each nucleotide in a DNA sequence."""
-    frequency = {"A": 0, "C": 0, "G": 0, "T": 0}
-    for nucleotide in dna_sequence.upper():
-        if nucleotide in frequency:
-            frequency[nucleotide] += 1
-    return frequency
+    tmpfreq = {"A": 0, "C": 0, "G": 0, "T": 0}
+    for i in dna_sequence.upper():
+        tmpfreq[i] += 1
+    return tmpfreq
 
-# Get input and output file paths from the user
-input_file = input("Enter the input file: ").strip()
-output_file = input("Enter the output file (leave blank to use default name): ").strip() or f"{input_file}_output.txt"
+sequence = input("Enter the input file:").strip()
+sequences = read_fasta(sequence)
 
-# Read DNA sequences from FASTA file
-sequences = read_fasta(input_file)
+output_file = input("Enter the output file for the sequences to be stored:").strip() or f"{sequence}_output.txt"
 
-# Write results to the output file
-with open(output_file, 'w') as file:
+with open(output_file, 'w') as output_file:
     for seq_num, dna_sequence in enumerate(sequences, start=1):
         is_valid = validate(dna_sequence)
         frequency = countfreq(dna_sequence)
-        
-        file.write(f"Sequence {seq_num}:\n")
-        file.write(f"Valid: {is_valid}\n")
-        file.write(f"Length: {len(dna_sequence)}\n")
-        file.write(f"Nucleotide frequency: {frequency}\n\n")
+        output_file.write(f"Sequence {seq_num}:\n")
+        output_file.write(f"Valid: {is_valid}\n")
+        output_file.write(f"Length: {len(dna_sequence)}\n")
+        output_file.write(f"Nucleotide frequency: {frequency}\n\n")
 
 print("Processing complete.")
