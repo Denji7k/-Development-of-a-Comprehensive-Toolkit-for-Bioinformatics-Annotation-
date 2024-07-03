@@ -7,14 +7,12 @@ def reverse_complement(seq):
     return complement(seq)[::-1]
 
 def gc_content(seq):
-    """Calculate the GC content of a sequence."""
     g_count = seq.count('G')
     c_count = seq.count('C')
     total_count = len(seq)
     return (g_count + c_count) / total_count * 100 if total_count > 0 else 0
 
 def melting_temperature(seq):
-    """Estimate the melting temperature (Tm) of a primer using the simple formula."""
     # Tm = 2 * (A + T) + 4 * (G + C)
     a_count = seq.count('A')
     t_count = seq.count('T')
@@ -63,6 +61,12 @@ def process_fasta(input_file, output_file):
                           f"Reverse Tm: {reverse_tm:.2f}°C\n")
 
 input_file = input("Enter the input file: ").strip()
+output_file = input("Enter the output file (leave blank to use input file name): ").strip() or f"{input_file}_output.txt"
+
+
+process_fasta(input_file, output_file)
+print(f"Primers and their properties have been written to '{output_file}'.")
+
 output_file = input("Enter the output file (leave blank to use input file name): ").strip() or f"{input_file}_output.txt"
 
 
