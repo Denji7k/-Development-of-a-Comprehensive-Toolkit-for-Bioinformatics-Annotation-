@@ -45,7 +45,6 @@ def translate_fasta_to_rna(input_file, output_file):
             protein_seq = translate_rna_to_protein(rna_seq)
             protein_file.write(f">{seq_id}\n{protein_seq}\n")
 
-# Input file names directly in the script
 input_file = input("Enter the input file: ").strip()
 output_file = input("Enter the output file (leave blank to use input file name): ").strip() or f"{input_file}_output.txt"
 
