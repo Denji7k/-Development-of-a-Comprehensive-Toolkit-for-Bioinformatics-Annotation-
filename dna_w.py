@@ -1,54 +1,51 @@
-try:
-    # Define molecular weights for nucleotides and phosphates
-    weights = {'A': 331.2, 'U': 307.2, 'G': 347.2, 'C': 307.2, 'T': 322.2}
-    phosphates = {'ssrna': 18.02, 'ssdna': 79.0, 'dsdna': 158.0}
-
-# input FASTA file path
-    input_file_path = input("Enter the input file: ").strip()
-    output_file_path = input("Enter the output file (leave blank to use input file name): ").strip() or f"{input_file_path}_output.txt"
-
-
-    # Prompt user to enter molecule type
-    mol_type = input("Enter molecule type (ssRNA, ssDNA, dsDNA): ").strip().lower()
-
-    # Validate molecule type input
-    if mol_type not in ['ssrna', 'ssdna', 'dsdna']:
-        raise ValueError("Invalid molecule type. Please enter 'ssRNA', 'ssDNA', or 'dsDNA'.")
-
+def parse_fasta(file_path):
     sequences = {}
     current_key = None
-
-    # Parse sequences from the input FASTA file
-    with open(input_file_path, 'r') as file:
+    current_sequence = []
+    sequence_count = 1
+    
+    with open(file_path, 'r') as file:
         for line in file:
             line = line.strip()
             if line.startswith('>'):
-                current_key = line[1:]
-                sequences[current_key] = ''
+                if current_key is not None:
+                    sequences[current_key] = ''.join(current_sequence)
+                current_key = f"{line[1:]}_{sequence_count}"
+                sequence_count += 1
+                current_sequence = []
             else:
-                sequences[current_key] += line
+                current_sequence.append(line)
+        if current_key is not None:
+            sequences[current_key] = ''.join(current_sequence)
+    
+    return sequences
 
-    sequence_weights = {}
+def find_motif_positions(sequence, motif_sequence):
+    if len(motif_sequence) > len(sequence):
+        return []
+    return [i + 1 for i in range(len(sequence) - len(motif_sequence) + 1) if sequence[i:i+len(motif_sequence)] == motif_sequence]
 
-    # Iterate over sequences and calculate weights
-    for seq_id, sequence in sequences.items():
-        seq_upper = sequence.upper()
-        if (mol_type == 'ssrna' and 'U' not in seq_upper) or \
-           (mol_type == 'ssdna' and 'T' not in seq_upper) or \
-           (mol_type == 'dsdna' and ('T' not in seq_upper or 'U' in seq_upper)):
-            print(f"Skipping sequence {seq_id}: Invalid sequence for {mol_type.upper()}.")
-        else:
-            # Calculate molecular weight
-            weight = sum(weights.get(base, 0) for base in seq_upper) + phosphates[mol_type]
-            weight = weight * 2 if mol_type == 'dsdna' else weight
-            sequence_weights[seq_id] = weight
+# Get user inputs
+input_file = input("Enter the input file: ").strip()
+output_file = input("Enter the output file (leave blank to use input file name): ").strip() or f"{input_file}_output.txt"
+motif_sequence = input("Enter the motif sequence to search for: ").strip().upper()
 
-    # Write molecular weights to the output file
-    with open(output_file_path, 'w') as f:
-        for seq_id, weight in sequence_weights.items():
-            f.write(f"Molecular weight of {seq_id}: {weight:.2f} g/mol\n")
+# Check if motif_sequence is valid
+if not motif_sequence:
+    print("Error: Motif sequence cannot be empty.")
+else:
+    # Parse the FASTA file
+    sequences = parse_fasta(input_file)
+    
+    if not sequences:
+        print("Error: No sequences found or issue reading file.")
+    else:
+        # Find motif positions in each sequence
+        sequence_positions = {seq_id: find_motif_positions(seq, motif_sequence) for seq_id, seq in sequences.items()}
 
-    print(f"Molecular weights have been written to {output_file_path}")
-
-except Exception as e:
-    print(f"Error occurred: {str(e)}")
+        # Write results to the output file
+        with open(output_file, 'w') as f:
+            for seq_id, positions in sequence_positions.items():
+                f.write(f"{seq_id}: {', '.join(map(str, positions))}\n")
+        
+        print(f"Positions of '{motif_sequence}' have been written to {output_file}")
