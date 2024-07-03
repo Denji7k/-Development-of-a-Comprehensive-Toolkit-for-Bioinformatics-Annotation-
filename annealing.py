@@ -23,7 +23,6 @@ def calculate_tm(primer):
                  'CA': 4.0, 'TG': 4.0, 'GT': 4.0, 'AC': 4.0,
                  'CT': 4.0, 'AG': 4.0, 'GA': 4.0, 'TC': 4.0,
                  'CG': 4.0, 'GC': 4.0, 'GG': 4.0, 'CC': 4.0}
-    
     return sum(tm_values.get(primer[i:i+2], 0) for i in range(len(primer) - 1))
 
 def calculate_annealing_temp(tm):
@@ -50,10 +49,8 @@ def write_results(output_file, sequences):
             f.write(f"Tm (Reverse Primer): {tm_reverse:.2f}*C\n")
             f.write(f"Annealing Temp (Reverse Primer): {ta_reverse:.2f}C\n\n")
 
-
 input_file = input("Enter the input FASTA file name: ").strip()
 output_file = input("Enter the output file name to store translated sequences: ").strip() or f"{input_file}_output.txt"
-
 
 sequences = read_fasta(input_file)
 write_results(output_file, sequences)
