@@ -1,48 +1,47 @@
-def read_fasta(file_path):
+def parse_fasta(file_path):
+    sequences = {}
+    current_key = None
+    current_sequence = []
+    sequence_count = 1
+    
     with open(file_path, 'r') as file:
-        sequences = []
-        sequence = ''
         for line in file:
             line = line.strip()
             if line.startswith('>'):
-                if sequence:
-                    sequences.append(sequence)
-                sequence = ''
+                if current_key is not None:
+                    sequences[current_key] = ''.join(current_sequence)
+                current_key = f"{line[1:]}_{sequence_count}"
+                sequence_count += 1
+                current_sequence = []
             else:
-                sequence += line
-        if sequence:
-            sequences.append(sequence)
+                current_sequence.append(line)
+        if current_key is not None:
+            sequences[current_key] = ''.join(current_sequence)
+    
     return sequences
 
-def length_check(seq1, seq2):
-    return len(seq1) == len(seq2)
+def find_motif_positions(sequence, motif_sequence):
+    if len(motif_sequence) > len(sequence):
+        return []
+    return [i + 1 for i in range(len(sequence) - len(motif_sequence) + 1) if sequence[i:i+len(motif_sequence)] == motif_sequence]
 
-def find_matching_segments(seq1, seq2):
-    return ''.join(a if a == b else '*' for a, b in zip(seq1, seq2))
 
-def calculate_similarity_percentage(seq1, seq2):
-    matches = sum(a == b for a, b in zip(seq1, seq2))
-    return (matches / len(seq1)) * 100
+input_file = input("Enter the input file: ").strip()
+output_file = input("Enter the output file (leave blank to use input file name): ").strip() or f"{input_file}_output.txt"
+motif_sequence = input("Enter the motif sequence to search for: ").strip().upper()
 
-file1_path = input("Enter the path for the first FASTA file: ").strip()
-file2_path = input("Enter the path for the second FASTA file: ").strip()
-output_file_path = input("Enter the path for the output file (default: comparison_output.txt): ").strip()
+if not motif_sequence:
+    print("Error: Motif sequence cannot be empty.")
+else:
+    
+    sequences = parse_fasta(input_file)
+    
+    if not sequences:
+        print("Error: No sequences found or issue reading file.")
+    else:
+        sequence_positions = {seq_id: find_motif_positions(seq, motif_sequence) for seq_id, seq in sequences.items()}
 
-if not output_file_path:
-    output_file_path = 'comparison_output.txt'
-
-sequences1 = read_fasta(file1_path)
-sequences2 = read_fasta(file2_path)
-
-if not sequences1 or not sequences2:
-    raise ValueError("Both FASTA files must contain at least one sequence.")
-
-with open(output_file_path, 'w') as f:
-    for i, seq1 in enumerate(sequences1, 1):
-        for j, seq2 in enumerate(sequences2, 1):
-            f.write(f"Comparing Sequence {i} from file1 with Sequence {j} from file2:\n")
-            f.write(f"Length check: {length_check(seq1, seq2)}\n")
-            f.write(f"Matching segments: {find_matching_segments(seq1, seq2)}\n")
-            f.write(f"Similarity percentage: {calculate_similarity_percentage(seq1, seq2):.2f}%\n\n")
-
-print(f"Processing complete. Results saved to '{output_file_path}'.")
+        with open(output_file, 'w') as f:
+            for seq_id, positions in sequence_positions.items():
+                f.write(f"{seq_id}: {', '.join(map(str, positions))}\n")
+        print(f"Positions of '{motif_sequence}' have been written to {output_file}")
