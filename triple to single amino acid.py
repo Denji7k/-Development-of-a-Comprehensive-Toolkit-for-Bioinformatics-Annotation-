@@ -39,7 +39,7 @@ def convert_to_triple_code(sequence: str) -> str:
     return ''.join(three_letter_sequence)
 
 input_file = input("Enter the input FASTA file name: ").strip()
-output_file = input("Enter the output file name: ").strip()
+output_file = input("Enter the output file name: ").strip() or f"{input_file}_output.txt"
 
 if not os.path.exists(input_file):
     print(f"Error: File '{input_file}' not found.")
