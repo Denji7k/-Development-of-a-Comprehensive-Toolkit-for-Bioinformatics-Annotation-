@@ -7,7 +7,7 @@ Here is a detailed and structured README for your GitHub repository that matches
 This repository contains a collection of Python scripts for processing DNA, RNA, and protein sequences from FASTA files. Each script performs a specific task such as sequence length calculation, nucleotide composition analysis, motif searching, and more. 
 
 ## Table of Contents
-1. [Lens_seq.py](#lens_seqpy)
+1. [Len_seq.py](#lens_seqpy)
 2. [Count.py](#countpy)
 3. [Dna_motif.py](#dna_motifpy)
 4. [Prot_motif.py](#prot_motifpy)
@@ -33,7 +33,7 @@ This repository contains a collection of Python scripts for processing DNA, RNA,
 24. [RComplementary.py](#rcomplementarypy)
 25. [Reverse_translation.py](#reverse_translationpy)
 
-### Lens_seq.py
+### Len_seq.py
 
 This Python script processes DNA, RNA, and protein sequences from a FASTA file. It calculates the length of each sequence and writes the results to a user-specified output file.
 
