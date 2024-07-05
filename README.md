@@ -7,7 +7,7 @@ Here is a detailed and structured README for your GitHub repository that matches
 This repository contains a collection of Python scripts for processing DNA, RNA, and protein sequences from FASTA files. Each script performs a specific task such as sequence length calculation, nucleotide composition analysis, motif searching, and more. 
 
 ## Table of Contents
-1. [Len_seq.py](#lens_seqpy)
+1. [Len_seq.py](#len_seqpy)
 2. [Count.py](#countpy)
 3. [Dna_motif.py](#dna_motifpy)
 4. [Prot_motif.py](#prot_motifpy)
@@ -15,16 +15,16 @@ This repository contains a collection of Python scripts for processing DNA, RNA,
 6. [Dna_w.py](#dna_wpy)
 7. [Transcribe.py](#transcribepy)
 8. [Translate.py](#translatepy)
-9. [1_to_3_amino.py](#1_to_3_aminopy)
+9. [1_to_3_amino.py](#1_to_3_amino_py)
 10. [Trim.py](#trimpy)
 11. [Primer.py](#primerpy)
-12. [Specific_fasta.py](#specific_fastapy)
+12. [Specific_fasta.py](#specific_fasta_py)
 13. [Annealing.py](#annealingpy)
 14. [Blast.py](#blastpy)
-15. [Cvs.py](#cvspy)
+15. [Csv.py](#csvpy)
 16. [Csv_align.py](#csv_alignpy)
 17. [Dna_stat.py](#dna_statpy)
-18. [Dna%.py](#dnapy)
+18. [Dna%.py](#dna_py)
 19. [Motif_shared.py](#motif_sharedpy)
 20. [Codon.py](#codonpy)
 21. [Prot_stat.py](#prot_statpy)
@@ -32,6 +32,7 @@ This repository contains a collection of Python scripts for processing DNA, RNA,
 23. [Validation.py](#validationpy)
 24. [RComplementary.py](#rcomplementarypy)
 25. [Reverse_translation.py](#reverse_translationpy)
+26. [Triple_to_single_amino_acid.py](#triple_to_single_amino_acid_py)
 
 ### Len_seq.py
 
@@ -322,6 +323,17 @@ This script calculates a result based on amino acid scores and writes it to an o
 
 **DESCRIPTION:**
 - This script receives input from the user, calculates a result based on amino acid scores, and stores the output in a user-specified file.
+
+### Triple_to_single_amino_acid.py
+
+This script reads DNA sequences from a FASTA file, converts them to a three-letter amino acid code, and writes the output to a specified file. It uses `read_fasta` to load sequences and `convert_to_triple_code` for conversion. 
+
+**USAGE:**
+- `-i` : Users provide a file containing multiple protein sequences in the FASTA format as input. Users can input raw sequences directly, but all the sequences will be considered as a single sequence.
+- `-o` : Users can specify where the output should be stored.
+
+**DESCRIPTION:**
+- This program receives files containing sequences from the user in FASTA format to translate amino acid sequences given in three-letter codes into single-letter codes.
 
 ---
 
