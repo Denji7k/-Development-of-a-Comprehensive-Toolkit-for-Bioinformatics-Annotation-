@@ -8,12 +8,6 @@ This repository contains a collection of Python scripts for processing DNA, RNA,
 
 Sure! Here's the updated README with headings in lowercase and more detailed explanations for each script:
 
----
-
-# Sequence Processing Scripts
-
-This repository contains a collection of Python scripts for processing DNA, RNA, and protein sequences from FASTA files. Each script performs a specific task such as sequence length calculation, nucleotide composition analysis, motif searching, and more.
-
 ## Table of Contents
 1. [len_seq.py](#len_seqpy)
 2. [count.py](#countpy)
