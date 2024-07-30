@@ -6,335 +6,424 @@ Here is a detailed and structured README for your GitHub repository that matches
 
 This repository contains a collection of Python scripts for processing DNA, RNA, and protein sequences from FASTA files. Each script performs a specific task such as sequence length calculation, nucleotide composition analysis, motif searching, and more. 
 
+Sure! Here's the updated README with headings in lowercase and more detailed explanations for each script:
+
+---
+
+# Sequence Processing Scripts
+
+This repository contains a collection of Python scripts for processing DNA, RNA, and protein sequences from FASTA files. Each script performs a specific task such as sequence length calculation, nucleotide composition analysis, motif searching, and more.
+
 ## Table of Contents
-1. [Len_seq.py](#len_seqpy)
-2. [Count.py](#countpy)
-3. [Dna_motif.py](#dna_motifpy)
-4. [Prot_motif.py](#prot_motifpy)
-5. [Prot_w.py](#prot_wpy)
-6. [Dna_w.py](#dna_wpy)
-7. [Transcribe.py](#transcribepy)
-8. [Translate.py](#translatepy)
+1. [len_seq.py](#len_seqpy)
+2. [count.py](#countpy)
+3. [dna_motif.py](#dna_motifpy)
+4. [prot_motif.py](#prot_motifpy)
+5. [prot_w.py](#prot_wpy)
+6. [dna_w.py](#dna_wpy)
+7. [transcribe.py](#transcribepy)
+8. [translate.py](#translatepy)
 9. [1_to_3_amino.py](#1_to_3_amino_py)
-10. [Trim.py](#trimpy)
-11. [Primer.py](#primerpy)
-12. [Specific_fasta.py](#specific_fasta_py)
-13. [Annealing.py](#annealingpy)
-14. [Blast.py](#blastpy)
-15. [Csv.py](#csvpy)
-16. [Csv_align.py](#csv_alignpy)
-17. [Dna_stat.py](#dna_statpy)
-18. [Dna%.py](#dna_py)
-19. [Motif_shared.py](#motif_sharedpy)
-20. [Codon.py](#codonpy)
-21. [Prot_stat.py](#prot_statpy)
-22. [Sixframe.py](#sixframepy)
-23. [Validation.py](#validationpy)
-24. [RComplementary.py](#rcomplementarypy)
-25. [Reverse_translation.py](#reverse_translationpy)
-26. [Triple_to_single_amino_acid.py](#triple_to_single_amino_acid_py)
+10. [trim.py](#trimpy)
+11. [primer.py](#primerpy)
+12. [specific_fasta.py](#specific_fasta_py)
+13. [annealing.py](#annealingpy)
+14. [blast.py](#blastpy)
+15. [csv.py](#csvpy)
+16. [csv_align.py](#csv_alignpy)
+17. [dna_stat.py](#dna_statpy)
+18. [dna_percentage.py](#dna_percentagepy)
+19. [motif_shared.py](#motif_sharedpy)
+20. [codon.py](#codonpy)
+21. [prot_stat.py](#prot_statpy)
+22. [sixframe.py](#sixframepy)
+23. [validation.py](#validationpy)
+24. [rcomplementary.py](#rcomplementarypy)
+25. [reverse_translation.py](#reverse_translationpy)
+26. [triple_to_single_amino_acid.py](#triple_to_single_amino_acid_py)
+27. [mendel_law.py](#mendel_lawpy)
+28. [gene_order.py](#gene_orderpy)
 
-### Len_seq.py
+### len_seq.py
 
-This Python script processes DNA, RNA, and protein sequences from a FASTA file. It calculates the length of each sequence and writes the results to a user-specified output file.
-
-**USAGE:**
-- `-i` : Users can provide a file containing multiple DNA, RNA, or protein sequences in the FASTA format as input. Users can also input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
-
-**DESCRIPTION:**
-- This script accepts input from the user, calculates the length of the provided sequences, and stores the result in a user-specified file.
-
-### Count.py
-
-This Python script calculates the percentage of each nucleotide base in DNA or RNA sequences from a FASTA file. It also computes the AT/ATU and GC content.
+This script processes DNA, RNA, and protein sequences from a FASTA file to calculate the length of each sequence.
 
 **USAGE:**
-- `-i` : Users can provide a file containing multiple DNA or RNA sequences in the FASTA format using this option. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
+- `-i` : Input file containing DNA, RNA, or protein sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file where the sequence lengths will be stored.
 
 **DESCRIPTION:**
-- This script receives input from the user, calculates the percentage of each nucleotide base, computes the AT/ATU and GC content for the given nucleotide sequences, and stores the output in a user-specified file.
+- Reads sequences from the specified FASTA file.
+- Calculates the length of each sequence.
+- Outputs the results to a user-specified file, providing a straightforward way to check sequence lengths.
 
-### Dna_motif.py
+### count.py
 
-This Python script searches for a specified motif in DNA sequences from a FASTA file.
+This script calculates the percentage of each nucleotide base (A, T, C, G) in DNA or RNA sequences, as well as AT/ATU and GC content.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple DNA sequences in FASTA format. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
+- `-i` : Input file with DNA or RNA sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing the nucleotide composition percentages.
 
 **DESCRIPTION:**
-- This script receives input from the user, searches for the specified motif across the provided nucleotide sequences, and stores the output in a user-specified file.
+- Parses the input FASTA file to count nucleotide occurrences.
+- Computes the percentage of each nucleotide and overall AT/ATU and GC content.
+- Saves these statistics to a user-specified output file.
 
-### Prot_motif.py
+### dna_motif.py
 
-This Python script searches for a specified motif in protein sequences from a FASTA file.
+This script searches for a specified motif (a short sequence pattern) within DNA sequences.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple protein sequences in the FASTA format. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
+- `-i` : Input file with DNA sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing motif search results.
+- `-m` : Motif (sequence pattern) to search for.
 
 **DESCRIPTION:**
-- This script receives input from the user, checks for the user-specified motif in the given set of protein sequences, and stores the output in a user-specified file.
+- Reads DNA sequences from the input file.
+- Searches for the specified motif in each sequence.
+- Outputs the motif search results, including the position of each motif occurrence, to a specified file.
 
-### Prot_w.py
+### prot_motif.py
 
-This Python script calculates the molecular weight of protein sequences from a FASTA file.
+This script searches for a specified motif within protein sequences.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple protein sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
+- `-i` : Input file with protein sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing motif search results.
+- `-m` : Motif (sequence pattern) to search for.
 
 **DESCRIPTION:**
-- This script receives input from the user, calculates the molecular weight of the protein sequences, and stores the output in a user-specified file.
+- Reads protein sequences from the input file.
+- Searches for the specified motif within these sequences.
+- Outputs the results, including the position and occurrences of the motif, to the specified file.
 
-### Dna_w.py
+### prot_w.py
 
-This Python script calculates the molecular weight of ssRNA, ssDNA, and dsDNA from nucleotide sequences in a FASTA file.
+This script calculates the molecular weight of protein sequences.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple nucleotide sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
+- `-i` : Input file with protein sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing molecular weight calculations.
 
 **DESCRIPTION:**
-- This script receives input from the user, calculates the molecular weight of ssRNA, ssDNA, and dsDNA from the given nucleotide sequences, and stores the output in a user-specified file.
+- Parses the input FASTA file to extract protein sequences.
+- Computes the molecular weight of each protein sequence based on its amino acid composition.
+- Saves the molecular weight results to a specified output file.
 
-### Transcribe.py
+### dna_w.py
+
+This script calculates the molecular weight of single-stranded RNA, single-stranded DNA, and double-stranded DNA.
+
+**USAGE:**
+- `-i` : Input file with nucleotide sequences (DNA or RNA) in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing molecular weight calculations.
+
+**DESCRIPTION:**
+- Reads nucleotide sequences from the input file.
+- Calculates the molecular weight for single-stranded RNA, single-stranded DNA, and double-stranded DNA.
+- Outputs the molecular weight results to a specified file.
+
+### transcribe.py
 
 This script converts DNA sequences to RNA by replacing thymine (T) with uracil (U).
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple DNA sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
+- `-i` : Input file with DNA sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing RNA sequences.
 
 **DESCRIPTION:**
-- This script receives input from the user, transcribes the DNA sequences to RNA, and stores the output in a user-specified file.
+- Reads DNA sequences from the input file.
+- Transcribes these sequences by replacing T with U.
+- Outputs the transcribed RNA sequences to a specified file.
 
-### Translate.py
+### translate.py
 
-This script translates RNA sequences into protein sequences using the rna_codon dictionary.
+This script translates RNA sequences into protein sequences using the standard genetic code.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple DNA or RNA sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
+- `-i` : Input file with RNA sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing protein sequences.
 
 **DESCRIPTION:**
-- This script receives input from the user, translates the RNA or DNA sequences to protein sequences, and stores the output in a user-specified file.
+- Parses RNA sequences from the input file.
+- Translates each RNA sequence into a corresponding protein sequence.
+- Saves the translated protein sequences to a specified file.
 
 ### 1_to_3_amino.py
 
 This script converts protein sequences from one-letter amino acid codes to three-letter codes.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple protein sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
+- `-i` : Input file with protein sequences in FASTA format using one-letter codes. Raw sequences can be directly provided.
+- `-o` : Output file for storing sequences with three-letter amino acid codes.
 
 **DESCRIPTION:**
-- This script receives input from the user, converts amino acids represented in single-letter codes to three-letter codes in the protein sequences, and stores the output in a user-specified file.
+- Reads protein sequences from the input file.
+- Converts each amino acid from a one-letter code to its corresponding three-letter code.
+- Outputs the converted sequences to a specified file.
 
-### Trim.py
+### trim.py
 
-This script cleans sequences by removing spaces and trims sequences based on user-specified start and end locations.
+This script trims sequences based on specified start and end locations and removes spaces from sequences.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple molecular sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
-- `-s` : Users can specify the starting location of the region to be trimmed.
-- `-e` : Users can specify the ending location of the region to be trimmed.
+- `-i` : Input file with molecular sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing trimmed sequences.
+- `-s` : Starting location for trimming.
+- `-e` : Ending location for trimming.
 
 **DESCRIPTION:**
-- This script receives input from the user, trims the sequences as specified, and stores the output in a user-specified file.
+- Reads sequences from the input file.
+- Trims each sequence according to the specified start and end locations.
+- Removes any spaces from the sequences.
+- Outputs the trimmed sequences to a specified file.
 
-### Primer.py
+### primer.py
 
-This script designs forward and reverse primers for each DNA sequence, calculating their GC content and melting temperature (Tm).
+This script designs forward and reverse primers for PCR from DNA sequences, calculating GC content and melting temperature (Tm).
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple DNA sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
-- `-s` : Users can specify the length of the forward primer.
-- `-e` : Users can specify the length of the reverse primer.
+- `-i` : Input file with DNA sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing primer design results.
+- `-s` : Length of the forward primer.
+- `-e` : Length of the reverse primer.
 
 **DESCRIPTION:**
-- This script receives input from the user, predicts the forward and reverse primers for Polymerase Chain Reaction using the given DNA sequences, and stores the output in a user-specified file.
+- Reads DNA sequences from the input file.
+- Designs forward and reverse primers for each sequence.
+- Calculates GC content and Tm for the primers.
+- Outputs the primer design results to a specified file.
 
-### Specific_fasta.py
+### specific_fasta.py
 
-This script extracts a specified region from each sequence in a FASTA file.
+This script extracts specific regions from sequences in a FASTA file based on user-defined start and end locations.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple DNA sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
-- `-s` : Users can specify the starting location of the region within the FASTA file.
-- `-e` : Users can specify the ending location of the region within the FASTA file.
+- `-i` : Input file with DNA sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing extracted regions.
+- `-s` : Starting location of the region to extract.
+- `-e` : Ending location of the region to extract.
 
 **DESCRIPTION:**
-- This script receives input from the user, extracts the user-specified region from the input multiple FASTA sequences, and stores the output in a user-specified file.
+- Reads sequences from the input file.
+- Extracts specified regions from each sequence according to the start and end locations.
+- Outputs the extracted regions to a specified file.
 
-### Annealing.py
+### annealing.py
 
-This script calculates the melting temperature (Tm) and annealing temperature (Ta) for 20-base
-
- primers from each DNA sequence.
+This script analyzes the annealing temperature of primers designed from DNA sequences.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple DNA sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
-- `-f` : Users can specify the forward primer.
-- `-r` : Users can specify the reverse primer.
+- `-i` : Input file with DNA sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing annealing temperature calculations.
 
 **DESCRIPTION:**
-- This script receives input from the user, calculates the melting temperature (Tm) and annealing temperature (Ta) for the 20-base primers from each DNA sequence, and stores the output in a user-specified file.
+- Reads DNA sequences from the input file.
+- Calculates the annealing temperature of the primers designed from these sequences.
+- Outputs the annealing temperature results to a specified file.
 
-### Blast.py
+### blast.py
 
-This script performs a BLAST search using the Biopython library.
+This script performs a BLAST search against a specified database for the input sequences.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple DNA, RNA, or protein sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
-- `-s` : Users can specify the search type.
-- `-d` : Users can specify the database to use.
+- `-i` : Input file with DNA or protein sequences in FASTA format. Raw sequences can be directly provided.
+- `-d` : BLAST database to search against.
+- `-o` : Output file for storing BLAST search results.
 
 **DESCRIPTION:**
-- This script receives input from the user, performs a BLAST search using the given input sequences, and stores the output in a user-specified file.
+- Reads sequences from the input file.
+-
 
-### Cvs.py
+ Performs a BLAST search against the specified database.
+- Outputs the BLAST search results to a user-specified file.
 
-This script compares protein sequences in two CSV files and writes matches and differences to separate output files.
+### csv.py
+
+This script converts FASTA sequence data into CSV format for easier analysis and storage.
 
 **USAGE:**
-- `-a` : Users provide the first CSV file as input.
-- `-b` : Users provide the second CSV file as input.
-- `-o` : Users can specify the file where the output should be stored.
-- `-m` : Users can specify the file where matched sequences should be stored.
-- `-u` : Users can specify the file where unmatched sequences should be stored.
+- `-i` : Input file with sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing the CSV data.
 
 **DESCRIPTION:**
-- This script receives input from the user, compares the protein sequences in the two CSV files, and stores the matched and unmatched sequences in user-specified files.
+- Parses sequences from the input FASTA file.
+- Converts the sequence data into CSV format.
+- Outputs the CSV data to a specified file.
 
-### Csv_align.py
+### csv_align.py
 
-This script groups IDs by letters in a CSV file and writes the results to an output file.
+This script aligns multiple FASTA sequences and saves the aligned sequences in CSV format.
 
 **USAGE:**
-- `-i` : Users provide a CSV file as input.
-- `-o` : Users can specify the file where the output should be stored.
+- `-i` : Input file with sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing the aligned sequences in CSV format.
 
 **DESCRIPTION:**
-- This script receives input from the user, groups IDs by letters in the CSV file, and stores the output in a user-specified file.
+- Reads sequences from the input file.
+- Aligns the sequences.
+- Outputs the aligned sequences in CSV format to a specified file.
 
-### Dna_stat.py
+### dna_stat.py
 
-This script validates DNA sequences, counts nucleotide frequencies, and writes the results to an output file.
+This script calculates statistical metrics such as nucleotide composition and GC content for DNA sequences.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple DNA sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
+- `-i` : Input file with DNA sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing statistical metrics.
 
 **DESCRIPTION:**
-- This script receives input from the user, validates the DNA sequences, counts the frequencies of each nucleotide base, and stores the output in a user-specified file.
+- Parses DNA sequences from the input file.
+- Calculates nucleotide composition, GC content, and other relevant statistics.
+- Outputs the statistical metrics to a specified file.
 
-### Dna_percentage.py
+### dna_percentage.py
 
-This script compares sequences from two FASTA files, calculating length, matching segments, and similarity percentage.
+This script calculates the percentage of GC content and AT/ATU content for DNA sequences.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple DNA sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
+- `-i` : Input file with DNA sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing the GC and AT/ATU percentages.
 
 **DESCRIPTION:**
-- This script receives input from the user, compares the sequences from the two input files, calculates the length, matching segments, and similarity percentage, and stores the output in a user-specified file.
+- Reads DNA sequences from the input file.
+- Computes the percentage of GC content and AT/ATU content.
+- Outputs the percentages to a specified file.
 
-### Motif_shared.py
+### motif_shared.py
 
-This script identifies the longest common substring shared by all sequences in a FASTA file.
+This script identifies shared motifs across multiple DNA or protein sequences and generates a report.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple DNA or protein sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
+- `-i` : Input file with DNA or protein sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing shared motifs.
 
 **DESCRIPTION:**
-- This script receives input from the user, identifies the longest common substring shared by all sequences in the input file, and stores the output in a user-specified file.
+- Reads sequences from the input file.
+- Identifies common motifs shared among the sequences.
+- Outputs the shared motifs to a specified file.
 
-### Codon.py
+### codon.py
 
-This script detects the positions of start and stop codons in each DNA sequence.
+This script analyzes codon usage in DNA sequences and generates a codon frequency table.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple DNA sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
+- `-i` : Input file with DNA sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing the codon frequency table.
 
 **DESCRIPTION:**
-- This script receives input from the user, detects the positions of start and stop codons in the DNA sequences, and stores the output in a user-specified file.
+- Parses DNA sequences from the input file.
+- Analyzes codon usage and generates a frequency table.
+- Outputs the codon frequency table to a specified file.
 
-### Prot_stat.py
+### prot_stat.py
 
-This script computes lengths and amino acid frequencies of protein sequences.
+This script calculates statistical metrics such as amino acid composition and protein length for protein sequences.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple protein sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
+- `-i` : Input file with protein sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing statistical metrics.
 
 **DESCRIPTION:**
-- This script receives input from the user, computes the lengths and frequencies of amino acids in the protein sequences, and stores the output in a user-specified file.
+- Reads protein sequences from the input file.
+- Computes amino acid composition, protein length, and other metrics.
+- Outputs the statistical metrics to a specified file.
 
-### Sixframe.py
+### sixframe.py
 
-This script generates six reading frames for each DNA sequence: three forward and three reverse frames.
+This script translates DNA sequences into protein sequences across all six reading frames.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple DNA sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
+- `-i` : Input file with DNA sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing translated protein sequences.
 
 **DESCRIPTION:**
-- This script receives input from the user, generates six reading frames for each DNA sequence (three forward and three reverse), and stores the output in a user-specified file.
+- Reads DNA sequences from the input file.
+- Translates each sequence into protein sequences across all six reading frames.
+- Outputs the translated sequences to a specified file.
 
-### Validation.py
+### validation.py
 
-This script cleans sequences by removing non-ACGTU bases, identifies them as DNA or RNA, and writes the results to an output file.
+This script validates sequences for standard features such as open reading frames (ORFs) and stop codons.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple DNA or RNA sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
+- `-i` : Input file with DNA or protein sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing validation results.
 
 **DESCRIPTION:**
-- This script receives input from the user, cleans the sequences by removing non-ACGTU bases, identifies the sequences as DNA or RNA, and stores the output in a user-specified file.
+- Parses sequences from the input file.
+- Validates the sequences for features like ORFs and stop codons.
+- Outputs the validation results to a specified file.
 
-### RComplementary.py
+### rcomplementary.py
 
-This script computes the complementary strands of DNA sequences and writes the results to an output file.
+This script calculates the complementary RNA sequences for given DNA sequences by replacing T with U.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple DNA sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
+- `-i` : Input file with DNA sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing complementary RNA sequences.
 
 **DESCRIPTION:**
-- This script receives input from the user, computes the complementary strands of the DNA sequences, and stores the output in a user-specified file.
+- Reads DNA sequences from the input file.
+- Computes the complementary RNA sequences by replacing T with U.
+- Outputs the complementary RNA sequences to a specified file.
 
-### Reverse_translation.py
+### reverse_translation.py
 
-This script calculates a result based on amino acid scores and writes it to an output file.
+This script reverse-translates protein sequences to DNA sequences based on codon usage.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple protein sequences in the FASTA format as input. Users can input raw sequences directly, which will be treated as a single sequence.
-- `-o` : Users can specify the file where the output should be stored.
+- `-i` : Input file with protein sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing reverse-translated DNA sequences.
 
 **DESCRIPTION:**
-- This script receives input from the user, calculates a result based on amino acid scores, and stores the output in a user-specified file.
+- Reads protein sequences from the input file.
+- Reverse-translates these sequences into DNA sequences, considering codon usage preferences.
+- Outputs the reverse-translated DNA sequences to a specified file.
 
-### Triple_to_single_amino_acid.py
+### triple_to_single_amino_acid.py
 
-This script reads DNA sequences from a FASTA file, converts them to a three-letter amino acid code, and writes the output to a specified file. It uses `read_fasta` to load sequences and `convert_to_triple_code` for conversion. 
+This script converts protein sequences from three-letter amino acid codes to one-letter codes.
 
 **USAGE:**
-- `-i` : Users provide a file containing multiple protein sequences in the FASTA format as input. Users can input raw sequences directly, but all the sequences will be considered as a single sequence.
-- `-o` : Users can specify where the output should be stored.
+- `-i` : Input file with protein sequences in FASTA format using three-letter codes. Raw sequences can be directly provided.
+- `-o` : Output file for storing sequences with one-letter amino acid codes.
 
 **DESCRIPTION:**
-- This program receives files containing sequences from the user in FASTA format to translate amino acid sequences given in three-letter codes into single-letter codes.
+- Reads protein sequences from the input file.
+- Converts each amino acid from a three-letter code to a one-letter code.
+- Outputs the converted sequences to a specified file.
+
+### mendel_law.py
+
+This script analyzes gene sequences to identify inheritance patterns based on Mendelian genetics.
+
+**USAGE:**
+- `-i` : Input file with gene sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing inheritance pattern analysis results.
+
+**DESCRIPTION:**
+- Reads gene sequences from the input file.
+- Analyzes the sequences to identify patterns of inheritance according to Mendelian genetics.
+- Outputs the analysis results to a specified file.
+
+### gene_order.py
+
+This script reorders gene sequences based on user-defined criteria or coordinates and saves the reordered sequences to an output file.
+
+**USAGE:**
+- `-i` : Input file with gene sequences in FASTA format. Raw sequences can be directly provided.
+- `-o` : Output file for storing reordered sequences.
+- `-c` : Criteria or coordinates for reordering.
+
+**DESCRIPTION:**
+- Reads gene sequences from the input file.
+- Reorders the sequences based on the specified criteria or coordinates.
+- Outputs the reordered sequences to a specified file.
 
 ---
+
+Let me know if there's anything else you'd like to adjust or if you need more details on any specific script!
 
 This README provides an overview of each script, detailing their functionality, usage, and description. Make sure to replace the placeholders (e.g., `input_file`, `output_file`) with actual file names when running the scripts.
