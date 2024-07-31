@@ -20,7 +20,7 @@ def transcribe(dna_sequence):
 
 def translate(rna_sequence):
     codon_table = {
-        "UUU": "F", "UUC": "F", "UUA": "L", "UUG": "L", "UCU": "S", "UCC": "P", "UCA": "S", "UCG": "S",
+        "UUU": "F", "UUC": "F", "UUA": "L", "UUG": "L", "UCU": "S", "UCC": "S", "UCA": "S", "UCG": "S",
         "UAU": "Y", "UAC": "Y", "UAA": "*", "UAG": "*", "UGU": "C", "UGC": "C", "UGA": "*", "UGG": "W",
         "CUU": "L", "CUC": "L", "CUA": "L", "CUG": "L", "CCU": "P", "CCC": "P", "CCA": "P", "CCG": "P",
         "CAU": "H", "CAC": "H", "CAA": "Q", "CAG": "Q", "CGU": "R", "CGC": "R", "CGA": "R", "CGG": "R",
@@ -39,7 +39,7 @@ def generate_six_frames(dna_sequences):
     all_frames = {}
     for header, dna_sequence in dna_sequences.items():
         rna_sequence = transcribe(dna_sequence)
-        revcomp_rna = transcribe(dna_sequence[::-1].translate(str.maketrans('ATCG', 'TAGC')))
+        revcomp_rna = transcribe(dna_sequence[::-1].translate(str.maketrans('ATCG', 'UAGC')))
         
         frames = {}
         frames['Forward Frame 1'] = translate(rna_sequence)
@@ -64,7 +64,6 @@ if __name__ == "__main__":
     input_file = input("Enter the input FASTA file name: ")
     output_file = input("Enter the output file name to store translated sequences: ") or f"{input_file}_output.txt"
 
-    
     sequences = read_fasta(input_file)
     sequences_with_frames = generate_six_frames(sequences)
     write_output(output_file, sequences_with_frames)
