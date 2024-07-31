@@ -13,30 +13,34 @@ def read_fasta(file_path):
                 sequences[current_seq_id] += line
     return sequences
 
-def convert_to_triple_code(sequence: str) -> str:
-    amino_acid_codes = {
-        'Ala': 'A', 'Cys': 'C', 'Asp': 'D', 'Glu': 'E', 'Phe': 'F',
-        'Gly': 'G', 'His': 'H', 'Ile': 'I', 'Lys': 'K', 'Leu': 'L',
-        'Met': 'M', 'Asn': 'N', 'Pro': 'P', 'Gln': 'Q', 'Arg': 'R',
-        'Ser': 'S', 'Thr': 'T', 'Val': 'V', 'Trp': 'W', 'Tyr': 'Y'
+def translate_dna_to_protein(dna_sequence):
+    # Codon table for DNA to Protein translation
+    codon_table = {
+        'ATA': 'I', 'ATC': 'I', 'ATT': 'I', 'ATG': 'M',
+        'ACA': 'T', 'ACC': 'T', 'ACG': 'T', 'ACT': 'T',
+        'AAC': 'N', 'AAT': 'N', 'AAA': 'K', 'AAG': 'K',
+        'AGA': 'R', 'AGC': 'S', 'AGG': 'R', 'AGT': 'S',
+        'CTA': 'L', 'CTC': 'L', 'CTG': 'L', 'CTT': 'L',
+        'CCA': 'P', 'CCC': 'P', 'CCG': 'P', 'CCT': 'P',
+        'CAC': 'H', 'CAT': 'H', 'CAA': 'Q', 'CAG': 'Q',
+        'CGA': 'R', 'CGC': 'R', 'CGG': 'R', 'CGT': 'R',
+        'GTA': 'V', 'GTC': 'V', 'GTG': 'V', 'GTT': 'V',
+        'GCA': 'A', 'GCC': 'A', 'GCG': 'A', 'GCT': 'A',
+        'GAC': 'D', 'GAT': 'D', 'GAA': 'E', 'GAG': 'E',
+        'GGA': 'G', 'GGC': 'G', 'GGG': 'G', 'GGT': 'G',
+        'TCA': 'S', 'TCC': 'S', 'TCG': 'S', 'TCT': 'S',
+        'TTC': 'F', 'TTT': 'F', 'TTA': 'L', 'TTG': 'L',
+        'TAC': 'Y', 'TAT': 'Y', 'TAA': '*', 'TAG': '*',
+        'TGC': 'C', 'TGT': 'C', 'TGA': '*', 'TGG': 'W',
+        'TGT': 'C', 'TGC': 'C', 'TGA': '*', 'TGG': 'W'
     }
     
-    three_letter_sequence = []
-    current_aa = ''
-    
-    i = 0
-    while i < len(sequence):
-        aa_found = False
-        for aa in amino_acid_codes:
-            if sequence[i:i+len(aa)] == aa:
-                three_letter_sequence.append(amino_acid_codes[aa])
-                i += len(aa)
-                aa_found = True
-                break
-        if not aa_found:
-            i += 1  # Move to the next character if no match is found
-    
-    return ''.join(three_letter_sequence)
+    protein_sequence = []
+    for i in range(0, len(dna_sequence) - 2, 3):
+        codon = dna_sequence[i:i+3]
+        protein_sequence.append(codon_table.get(codon, '?'))  # Use '?' for unknown codons
+
+    return ''.join(protein_sequence)
 
 input_file = input("Enter the input FASTA file name: ").strip()
 output_file = input("Enter the output file name: ").strip() or f"{input_file}_output.txt"
@@ -47,6 +51,6 @@ else:
     sequences = read_fasta(input_file)
     with open(output_file, 'w') as f:
         for seq_id, sequence in sequences.items():
-            f.write(f">{seq_id}\n{convert_to_triple_code(sequence)}\n")
+            f.write(f">{seq_id}\n{translate_dna_to_protein(sequence)}\n")
 
     print(f"Converted sequences have been saved to '{output_file}'")
