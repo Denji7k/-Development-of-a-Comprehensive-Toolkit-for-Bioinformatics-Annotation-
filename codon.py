@@ -1,42 +1,95 @@
-def detect_stop_and_start_codons(dna_sequence):
-    stop_codons = ['TAA', 'TAG', 'TGA']
-    start_codon = 'ATG'
-
-    stop_codon_positions = [i + 1 for i in range(len(dna_sequence) - 2) if dna_sequence[i:i+3] in stop_codons]
-    start_codon_positions = [i + 1 for i in range(len(dna_sequence) - 2) if dna_sequence[i:i+3] == start_codon]
-
-    return stop_codon_positions, start_codon_positions
+import matplotlib.pyplot as plt
+import mplcursors
 
 def read_fasta(file_path):
     sequences = []
-    current_sequence = ''
+    header = ''
+    sequence = ''
     
     with open(file_path, 'r') as file:
         for line in file:
             line = line.strip()
             if line.startswith('>'):
-                if current_sequence:
-                    sequences.append(current_sequence.upper())
-                current_sequence = ''
+                if sequence:
+                    sequences.append((header, sequence))
+                header = line[1:]  # Remove '>'
+                sequence = ''
             else:
-                current_sequence += line
-        if current_sequence:
-            sequences.append(current_sequence.upper())
+                sequence += line
+        if sequence:
+            sequences.append((header, sequence))
     
     return sequences
 
-input_file = input("Enter the input file: ").strip()
-output_file = input("Enter the output file (leave blank to use input file name): ").strip() or f"{input_file}_output.txt"
+def calculate_content(sequence, bases):
+    if not sequence:
+        return 0.0
+    sequence = sequence.upper()
+    count = sum(sequence.count(base) for base in bases)
+    return round(float(count) / len(sequence) * 100, 2)
+
+def get_bases(sequence):
+    return 'AU' if 'U' in sequence else 'AT'
+
+def is_valid_sequence(sequence):
+    return all(base in 'ACGTU' for base in sequence)
+
+def nucleotide_percentages(sequence):
+    total = len(sequence)
+    return {base: round(sequence.count(base) / total * 100, 2) for base in 'ACGTU'}
+
+def plot_gc_content_distribution(gc_contents, gc_details, output_file):
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    # Scatter plot of GC content values
+    scatter = ax.scatter(range(1, len(gc_contents) + 1), gc_contents, c='royalblue', s=50, edgecolor='black')
+
+    # Adding hover annotations using mplcursors
+    mplcursors.cursor(scatter, hover=True).connect(
+        "add", lambda sel: sel.annotation.set_text(gc_details[sel.index])
+    )
+    
+    ax.set_title('GC Content Distribution')
+    ax.set_xlabel('Sequence Index')
+    ax.set_ylabel('GC Content (%)')
+    ax.grid(True)
+
+    plt.savefig(output_file)
+    plt.show()
+
+# Simplified execution
+input_file = input('Enter the Fasta File:')
+output_file = f"{input_file}_gc_content_details.txt"
+plot_file = f"{input_file}_gc_content_distribution.png"
 
 sequences = read_fasta(input_file)
-if not sequences:
-    raise ValueError("Error: No sequences found in the FASTA file.")
+
+gc_contents = []
+gc_details = []
+results = []
+
+for index, (header, sequence) in enumerate(sequences, start=1):
+    if not is_valid_sequence(sequence):
+        results.append(f"{header} contains invalid characters and will be skipped.\n")
+        continue
+    
+    gc_content = calculate_content(sequence, 'GC')
+    base_type = get_bases(sequence)
+    nucleotide_percents = nucleotide_percentages(sequence)
+    
+    gc_contents.append(gc_content)
+    gc_details.append(f"{header}\nGC content: {gc_content:.2f}%\nNucleotide percentages: {nucleotide_percents}")
+
+    if base_type == 'AU':
+        au_content = calculate_content(sequence, 'AU')
+        results.append(f"{header}\nGC content: {gc_content:.2f}%, AU content: {au_content:.2f}%\nNucleotide percentages: {nucleotide_percents}\n")
+    else:
+        at_content = calculate_content(sequence, 'AT')
+        results.append(f"{header}\nGC content: {gc_content:.2f}%, AT content: {at_content:.2f}%\nNucleotide percentages: {nucleotide_percents}\n")
 
 with open(output_file, 'w') as file:
-    for i, sequence in enumerate(sequences, start=1):
-        stop_positions, start_positions = detect_stop_and_start_codons(sequence)
-        file.write(f"Sequence {i}:\n")
-        file.write(f"Stop Codon Positions: {stop_positions}\n")
-        file.write(f"Start Codon Positions: {start_positions}\n\n")
+    file.writelines(results)
 
-print("Processing complete.")
+plot_gc_content_distribution(gc_contents, gc_details, plot_file)
+print(f"The GC, AT, and AU content for each sequence has been written to {output_file}")
+print(f"GC content distribution plot has been saved to {plot_file}")
