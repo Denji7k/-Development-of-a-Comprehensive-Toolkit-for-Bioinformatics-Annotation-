@@ -34,6 +34,6 @@ output_file = input("Enter the output file:").strip() or f"{input_file}_output.t
 
 with open(output_file, 'w') as file:
     for seq_id, result in results.items():
-        file.write(f"{seq_id}: {result}\n")
+        file.write(f"{seq_id}:\n {result}\n")
 
 print("Output stored in 'fasta_sequence.txt_ouput.txt' ")
