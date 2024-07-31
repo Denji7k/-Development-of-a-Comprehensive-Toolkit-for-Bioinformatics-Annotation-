@@ -50,6 +50,6 @@ protein_sequences = {key: translate_rna_to_protein(seq) for key, seq in sequence
 # Write the protein sequences to the output file
 with open(output_file, 'w') as file:
     for key, protein_sequence in protein_sequences.items():
-        file.write(f'{key}: {protein_sequence}\n')
+        file.write(f'{key}: \n {protein_sequence}\n')
 
 print(f"Protein sequences have been written to {output_file}.")
