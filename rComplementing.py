@@ -2,12 +2,13 @@ def read_fasta(file_path):
     sequences = {}
     try:
         with open(file_path, 'r') as file:
+            seq_id = None
             for line in file:
                 line = line.strip()
                 if line.startswith('>'):
                     seq_id = line[1:]
                     sequences[seq_id] = ''
-                else:
+                elif seq_id:  # Check if seq_id is set to avoid appending to non-existent keys
                     sequences[seq_id] += line
     except IOError:
         print(f"Error: Unable to read from the file '{file_path}'")
@@ -27,7 +28,7 @@ def write_complementary_fasta(sequences, output_file):
         print(f"Error: Unable to write to the file '{output_file}'")
 
 input_file = input("Enter the input FASTA file name: ").strip()
-output_file = input("Enter the output file name: ").strip()or f"{input_file}_output.txt"
+output_file = input("Enter the output file name: ").strip() or f"{input_file}_output.txt"
 
 sequences = read_fasta(input_file)
 write_complementary_fasta(sequences, output_file)
