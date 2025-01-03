@@ -1,12 +1,8 @@
-Here is a detailed and structured README for your GitHub repository that matches the format and explanations you provided. This README will include descriptions, usage instructions, and other relevant information for each script:
 
----
+
 
 # Sequence Processing Scripts
-
 This repository contains a collection of Python scripts for processing DNA, RNA, and protein sequences from FASTA files. Each script performs a specific task such as sequence length calculation, nucleotide composition analysis, motif searching, and more. 
-
-Sure! Here's the updated README with headings in lowercase and more detailed explanations for each script:
 
 ## Table of Contents
 1. [len_seq.py](#len_seqpy)
@@ -417,7 +413,3 @@ This script reorders gene sequences based on user-defined criteria or coordinate
 - Outputs the reordered sequences to a specified file.
 
 ---
-
-Let me know if there's anything else you'd like to adjust or if you need more details on any specific script!
-
-This README provides an overview of each script, detailing their functionality, usage, and description. Make sure to replace the placeholders (e.g., `input_file`, `output_file`) with actual file names when running the scripts.
